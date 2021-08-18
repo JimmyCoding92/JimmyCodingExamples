@@ -1,0 +1,17 @@
+﻿@model List<DockerExampleWithSQL.Models.User>
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<a asp-action="create" asp-controller="Home">AddUser</a>
+
+</a>
+<div class="text-center">
+ 
+ <ul>
+    @foreach (var item in Model)
+    {
+        <li>@item.Name</li>
+    }
+ </ul>
+</div>
