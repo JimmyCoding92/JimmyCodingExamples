@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myapp
+  labels:
+    app: myapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: myapp
+  template:
+    metadata:
+      labels:
+        app: myapp
+    spec:
+      containers:
+      - name: myapp
+        image: jimmycoding92/jimmy-coding-example-app:v1
+        ports:
+        - containerPort: 80
+        env:
+        - name: DbServer
+          valueFrom:
+            configMapKeyRef:
+              name: myapp-configmap
+              key: db_server
+        - name: DbPort
+          valueFrom: 
+            configMapKeyRef:
+              name: myapp-configmap
+              key: db_port
+        - name: DbUser
+          valueFrom: 
+            secretKeyRef:
+              name: sql-secret
+              key: sql-username
+        - name: Password
+          valueFrom: 
+            secretKeyRef:
+              name: sql-secret
+              key: sql-password
+        - name: Database
+          valueFrom: 
+            configMapKeyRef:
+              name: myapp-configmap
+              key: database
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: myapp-service
+spec:
+  selector:
+    app: myapp
+  type: LoadBalancer  
+  ports:
+    - port: 80
+      targetPort: 80
+      nodePort: 30000

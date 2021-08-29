@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sql-deployment
+  labels:
+    app: sql
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sql
+  template:
+    metadata:
+      labels:
+        app: sql
+    spec:
+      containers:
+      - name: sql
+        image: mcr.microsoft.com/mssql/server:2017-latest-ubuntu
+        ports:
+        - containerPort: 1433
+        env:
+        - name: ACCEPT_EULA
+          valueFrom:
+            configMapKeyRef:
+              name: sql-configmap
+              key: accept_eula
+        - name: SA_PASSWORD
+          valueFrom: 
+            secretKeyRef:
+              name: sql-secret
+              key: sql-password
+        - name: MSSQL_PID
+          valueFrom: 
+            configMapKeyRef:
+              name: sql-configmap
+              key: mssql_pid
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sql-service
+spec:
+  selector:
+    app: sql
+  ports:
+    - protocol: TCP
+      port: 1433
+      targetPort: 1433
+

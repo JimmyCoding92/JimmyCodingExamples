@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: sql-configmap
+data:
+  accept_eula: "Y"
+  mssql_pid: "Express"
