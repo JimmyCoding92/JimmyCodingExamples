@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "Gl0OxHbxgN/bznAxBs3HiyIyjKhQZ8n2WJ0aRBvLWBc=",
+  "Source": "BasicWeatherCacheApp",
+  "BasePath": "_content/BasicWeatherCacheApp",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
